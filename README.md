@@ -2,6 +2,9 @@
 A 3D printed, ghetto ass laser aiming device
 
 ## Updated hardware from Swampdonkey's verison
+
+Digi-key BOM: https://www.digikey.com/en/mylists/list/YLE6AURR2X
+
 [6-pos Rotary Switch](https://www.digikey.com/en/products/detail/c-k/A10605RNCQ/3751747)
 
 [2.5mm Jack](https://www.digikey.com/en/products/detail/cui-devices/MJ-2508/281259)
