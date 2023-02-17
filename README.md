@@ -5,11 +5,11 @@ A 3D printed, ghetto ass laser aiming device
 
 Digi-key BOM: https://www.digikey.com/en/mylists/list/YLE6AURR2X
 
-[6-pos Rotary Switch](https://www.digikey.com/en/products/detail/c-k/A10605RNCQ/3751747)
+[M4x6x6mm Heatset Inserts](https://a.co/d/dzFERyy)
 
-[2.5mm Jack](https://www.digikey.com/en/products/detail/cui-devices/MJ-2508/281259)
+[850nm 3W LED](https://a.co/d/1zIGPuo)
 
-[M4x6x6mm Heatset Inserts](https://www.amazon.com/gp/product/B08ZN546VG)
+[LED Lens](https://a.co/d/ejgL7wE)
 
 ## Things still in development
 I am still working on a better retaining method for the laser zeroing, so any suggestions are appreciated!
