@@ -1,7 +1,7 @@
 # GAL
 A 3D printed, ghetto ass laser aiming device
 
-[Link to Falstad Circuit](https://tinyurl.com/2nwahx6a)
+[Link to Falstad Circuit](https://tinyurl.com/2h69vpjn)
 
 ## Updated hardware from Swampdonkey's verison
 
