@@ -1,4 +1,4 @@
-A 3D printed, gun aiming laser device
+A 3D printed, gun aiming laser!
 
 <details><summary>How do I download the files from GitHub?</summary>
 
