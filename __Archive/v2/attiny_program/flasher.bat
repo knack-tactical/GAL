@@ -1,0 +1,2 @@
+powershell.exe -command "& 'C:\Program Files (x86)\Arduino\hardware\tools\avr/bin/avrdude' -C'C:\Program Files (x86)\Arduino\hardware\tools\avr/etc/avrdude.conf' -pattiny84 -cstk500v1 -PCOM14 -b19200 -e -Uefuse:w:0xff:m -Uhfuse:w:0xdf:m -Ulfuse:w:0xe2:m ; & 'C:\Program Files (x86)\Arduino\hardware\tools\avr/bin/avrdude' -C'C:\Program Files (x86)\Arduino\hardware\tools\avr\etc\avrdude.conf' -pattiny84 -cstk500v1 -PCOM14 -b19200 -Uflash:w:'C:\Users\sunha\Documents\GitHub\GAL\attiny_program\firmware/firmware.ino.hex':i"
+

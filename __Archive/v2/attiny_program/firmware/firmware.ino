@@ -2,6 +2,56 @@
 #include <avr/sleep.h>
 #define time_t unsigned long
 
+/*
+ *                    ATtiny84  Pinout
+ *                         ______
+ *                 VCC - 1|o     |14- GND
+ *           (10)  PB0 - 2|      |13- PA0  (0/A0)
+ *            (9)  PB1 - 3|      |12- PA1  (1/A1)
+ *     RESET (11)  PB3 - 4|      |11- PA2  (2/A2)
+ *            (8) PB2* - 5|      |10- PA3  (3/A3)
+ *         (7/A7) PA7* - 6|      |9 - PA4  (4/A4) SCK
+ *    MOSI (6/A6) PA6* - 7|______|8 - PA5* (5/A5) MISO
+ *        
+ */
+
+/*
+ *                  ATtiny84 Pin Map
+ *  IC PIN  | ATtiny PIN  | ARDUINO PIN | SPECS           | FUNCTION
+ *  1         VCC           VCC           VCC               VCC
+ *  2         PB0           10            XTAL1             
+ *  3         PB1           9             XTAL2             
+ *  4         PB3           11            RESET             FLASH_RESET_PIN_10
+ *  5         PB2           8             INT0, PWM         
+ *  6         PA7           7/A7          ADC, PWM          ILLUM_PWM
+ *  7         PA6           6/A6          ADC, PWM, MOSI    FLASH_MOSI_PIN11, VIS_LASER_TTL
+ *  8         PA5           5/A5          ADC, PWM, MISO    FLASH_MISO_PIN12, IR_LASER_TTL
+ *  9         PA4           4/A4          ADC, SCK          FLASH_SCK_PIN13, BUTTON
+ *  10        PA3           3/A3          ADC               SW_8
+ *  11        PA2           2/A2          ADC, AIN1         SW_4
+ *  12        PA1           1/A1          ADC, AIN0         SW_2
+ *  13        PA0           0/A0          ADC, AREF         SW_1
+ *  14        GND           GND           GND               GND
+ */
+
+
+/*
+ *  Functions needed:
+ *  SW_1:                 digitalRead()
+ *  SW_2:                 digitalRead()
+ *  SW_4:                 digitalRead()
+ *  SW_8:                 digitalRead()
+ *  BUTTON:               interrupt (PA0-7)   PA4
+ *  FLASH_SCK_PIN13:      SCK                 PA4
+ *  FLASH_MISO_PIN12:     MISO                PA6
+ *  FLASH_MOSI_PIN11:     MOSI                PA5
+ *  FLASH_RESET_PIN_10:   RESET pin           PB3
+ *  VIS_LASER_TTL:        PWM (PA5-7, PB2)    PA6
+ *  IR_LASER_TTL:         PWM (PA5-7, PB2)    PA5
+ *  INDICATOR:            digitalWrite()      
+ *  ILLUM_PWM:            PWM (PA5-7, PB2)    PA7
+ *  
+ */
 // Pin Variables
 int rotarySwitch = A0;
 int vis = 6;
@@ -20,10 +70,10 @@ int blinkSpeed = 100; // ms between blink state changes
 bool buttonPressed = false;
 
 // Brightness Settings
-int brightPct = 100;
-int dimPct = 20;
-float b = brightPct / 100.0 * 255;
-float d = dimPct / 100.0 * 255;
+float bright = 100 / 100.0 * 255;
+float illum_dim = 20 / 100.0 * 255;
+float laser_dim = 5 / 100.0 * 255;
+
 //                // VH,     VL,  O, AL,  DL,  AH,     IH,     DH,     P
 //int visVal[9] =   {bright, dim, 0, 0,   0,   0,      0,      0,      0};
 //int irVal[9] =    {0,      0,   0, dim, dim, bright, 0,      bright, 0};
@@ -31,9 +81,9 @@ float d = dimPct / 100.0 * 255;
 //int ppsVal[9] =   {0,      0,   0, 0,   1,   2,      4,      8,      0};
 
                 // P  DH  IH  AH  DL  AL  O  VL  VH
-int visVal[9] =   {0, 0,  0,  0,  0,  0,  0, d,  b};
-int irVal[9] =    {0, b,  0,  b,  d,  d,  0, 0,  0};
-int illumVal[9] = {0, b,  b,  0,  d,  0,  0, 0,  0};
+int visVal[9] =   {0, 0,  0,  0,  0,  0,  0, illum_dim,  bright};
+int irVal[9] =    {0, bright,  0,  bright,  laser_dim,  laser_dim,  0, 0,  0};
+int illumVal[9] = {0, bright,  bright,  0,  illum_dim,  0,  0, 0,  0};
 int ppsVal[9] =   {0, 8,  4,  2,  1,  0,  0, 0,  0};
 int programPos = 0;
 

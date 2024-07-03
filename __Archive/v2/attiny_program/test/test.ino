@@ -36,6 +36,7 @@ bool testDoublePress_ = false;
 
 
 void setup() {
+  pinMode(13, OUTPUT);
   pinMode(ledPin, INPUT);
   pinMode(buttonPin, INPUT);
   pinMode(illumPin, INPUT);
@@ -111,16 +112,30 @@ void setup() {
   }
 
   Serial.println("############# GAL v2.1 Testing Complete #############\n");
+
+  if (haveFailed) {
+    Serial.println("\n****FAILED****");
+    while (true) {
+      delay(500);
+      digitalWrite(13, HIGH);
+      delay(500);
+      digitalWrite(13, LOW);
+    }
+  }
 }
 
+
 void testPos(int pos) {
-  deactivate(250);
+  deactivate(125);
   dac.setVoltage(dacValue[pos], false);
   Serial.print((String)names[pos] + "\t" + pos + "\t");
 
     // Activate PCB
-  activate(250);
-  testAndValidate(pos); delay(500);
+  activate(125);
+  if (pos == 0) {
+    delay(125);
+  }
+  testAndValidate(pos); delay(125);
   if (!leaveOn) {
     deactivate(0);
   }
@@ -128,7 +143,7 @@ void testPos(int pos) {
 
 void testProgram() {
   deactivate(100);
-  for (int i = 4; i > 0; i--) {
+  for (int i = 2; i > 0; i--) {
     deactivate(100);
     dac.setVoltage(dacValue[0], false);   // PRGM
     Serial.println("Setting to PRGM"); delay(300);
@@ -260,6 +275,10 @@ void testAndValidate(int pos) {
   Serial.println((String)led + "\t" + illum  + "\t" + ir  + "\t" + vis);
   Serial.println((String)"   Actual\t" + led_t  + "\t" + illum_t  + "\t" + ir_t  + "\t" + vis_t);
   if (showErrors) {
+    if (led_t != 1) {
+      Serial.println("### ERROR: LED value not correct ###");
+      haveFailed = true;
+    }
     if (illum_d > 10) {
       Serial.println("### ERROR: ILLUM value not correct ###");
       haveFailed = true;
