@@ -1,3 +1,7 @@
+/*  The code for the GALv3
+ *  by KNACK
+ */
+
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
 #define time_t unsigned long
@@ -67,7 +71,7 @@
 #define SLEEP_TIMEOUT         500   // ms delay until allowed to sleep
 #define LOW_BATTERY_MV        2625  // Maximum level for a low battery warning in mV (accounting for voltage drop)
 #define DBL_PRESS_MAX         300   // max ms between clicks to enable double-press-to-hold
-#define DBL_PRESS_MIN         50    // min ms between clicks to enable double-press-to-hold (debounce)
+#define DBL_PRESS_MIN         25    // min ms between clicks to enable double-press-to-hold (debounce)
 
 #define ILLUM_HIGH  100   // % of power for the illuminator high mode
 #define ILLUM_MED   50    // % of power for the illuminator medium mode
