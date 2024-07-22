@@ -6,4 +6,4 @@
 
 </details>
 
-### v3 files availble now! v3 Build Guide, Video, and Parts Kits coming soon!
+### v3 files and parts kits availble now! Visit [knacktactical.com](https://knacktactical.com) to purchase a parts kit!
