@@ -5,6 +5,7 @@
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
 #define time_t unsigned long
+#define round(N) ((N) >=0)? (int)((N)+0.5) : (int)((N)-0.5)
 
 /*                    ATtiny84  Pinout
  *                         ______
@@ -52,6 +53,7 @@
  *  INDICATOR:            digitalWrite()      PB2
  *  ILLUM_PWM:            PWM (PA5-7, PB2)    PA7
  */
+
 
 // Pin Variables 
 #define SW_1            1

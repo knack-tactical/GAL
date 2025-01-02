@@ -1,10 +1,11 @@
-/*  The code for the GALv3
+/*  The code for the GALv3.1 (reordered modes on LID)
  *  by KNACK
  */
-
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
+#include <avr/power.h>
 #define time_t unsigned long
+#define round(N) ((N) >=0)? (int)((N)+0.5) : (int)((N)-0.5)
 
 /*                    ATtiny84  Pinout
  *                         ______
@@ -111,6 +112,8 @@ bool fade_up = false;
 ///////////////////////////////
 
 ISR(PCINT0_vect) {
+  ADCSRA &= bit(ADEN);
+  power_all_enable();
   current_time = millis();
   noInterrupts();
   if (!digitalRead(BUTTON_PIN)) {
@@ -191,6 +194,9 @@ void loop() {
       analogWrite(IR_PIN, 0);
       analogWrite(ILLUM_PIN, 0);
       digitalWrite(INDICATOR_PIN, LOW);
+      delay(1000);
+      ADCSRA &= ~ bit(ADEN);
+      power_all_disable();
       sleep_mode();
     }
   }
