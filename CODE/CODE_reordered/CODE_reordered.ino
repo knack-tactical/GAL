@@ -68,7 +68,7 @@
 // Program Constants
 #define SHUTOFF_TIMEOUT       30500 // ms until button press timeout counter increments | ~30s
 #define TIMEOUT_COUNT_LIMIT   10    // number of timeout counter increments until shutdown | 10 x 30s = 5min
-#define BLINK_SPEED_SLOW      45    // ms between blink state changes
+#define BLINK_SPEED_SLOW      60    // ms between blink state changes
 #define SLEEP_TIMEOUT         500   // ms delay until allowed to sleep
 #define LOW_BATTERY_MV        2625  // Maximum level for a low battery warning in mV (accounting for voltage drop)
 #define DBL_PRESS_MAX         300   // max ms between clicks to enable double-press-to-hold
@@ -126,7 +126,6 @@ ISR(PCINT0_vect) {
       button_pressed = true;
       digitalWrite(INDICATOR_PIN, HIGH);
       set_outputs();
-      batt_v = read_vcc();
     }
   } else {
     button_pressed = false;
@@ -146,10 +145,10 @@ ISR(PCINT0_vect) {
 
 void setup() {
   pinMode(BUTTON_PIN, INPUT_PULLUP);
-  pinMode(SW_1, INPUT_PULLUP);
-  pinMode(SW_2, INPUT_PULLUP);
-  pinMode(SW_4, INPUT_PULLUP);
-  pinMode(SW_8, INPUT_PULLUP);
+  pinMode(SW_1, INPUT);
+  pinMode(SW_2, INPUT);
+  pinMode(SW_4, INPUT);
+  pinMode(SW_8, INPUT);
   pinMode(INDICATOR_PIN, OUTPUT);
   GIMSK = 0b00010000;
   PCMSK0 = 0b00010000;
@@ -161,6 +160,7 @@ void setup() {
     digitalWrite(INDICATOR_PIN, HIGH);
     set_outputs();
   }
+  batt_v = read_vcc();
 }
 
 void loop() {
@@ -195,6 +195,7 @@ void loop() {
       analogWrite(ILLUM_PIN, 0);
       digitalWrite(INDICATOR_PIN, LOW);
       delay(1000);
+      batt_v = read_vcc();
       ADCSRA &= ~ bit(ADEN);
       power_all_disable();
       sleep_mode();
@@ -207,10 +208,18 @@ void loop() {
 ///////////////////////////////
 
 void set_outputs() {
+  pinMode(SW_1, INPUT_PULLUP);
+  pinMode(SW_2, INPUT_PULLUP);
+  pinMode(SW_4, INPUT_PULLUP);
+  pinMode(SW_8, INPUT_PULLUP);
   bool sw_1 = digitalRead(SW_1);
   bool sw_2 = digitalRead(SW_2);
   bool sw_4 = digitalRead(SW_4);
   bool sw_8 = digitalRead(SW_8);
+  pinMode(SW_1, INPUT);
+  pinMode(SW_2, INPUT);
+  pinMode(SW_4, INPUT);
+  pinMode(SW_8, INPUT);
 
   int pos = (0 << 3) | !sw_8 << 3 | !sw_4 << 2 | !sw_2 << 1 | !sw_1;
   analogWrite(IR_PIN, ir_val[pos]);
