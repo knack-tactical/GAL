@@ -6,4 +6,4 @@
 
 </details>
 
-### v3 files and parts kits availble now! Visit [knacktactical.com](https://knacktactical.com) to purchase a parts kit!
+## This project has sunset. Thank you all for your interest and support!
